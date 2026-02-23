@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>TBooks</title>
+</head>
+<body>
+  
+  <header class="header">
+    <div class="header-content">
+      <h1>TBooks</h1>
+      <button class="add-book button-theme">Add Book</button>
+    </div>
+  </header>
+  <main class="content-container">
+    <div class="content">
+
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer-content">
+      <p>© 2026 Coder Binary. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <dialog class="add-book--dialog">
+    <form id="add-book--form">
+      <i class="fa-solid fa-x close-dialog" style="color: rgb(0, 0, 0);"></i>
+      <label class="book-name--label" for="book-name--input">Enter a book's name :</label>
+      <input type="text" name="book-name" id="book-name--input" required>
+      <label class="book-author--label" for="book-author--input">Enter the author's name :</label>
+      <input type="text" name="book-author" id="book-author--input" required>
+      <label class="book-pages--label" for="book-pages--input">Enter the total number pages the book has :</label>
+      <input type="text" name="book-pages" id="book-pages--input">      
+      <label class="book-description--label" for="book-description--input">Write a description about the book ( 2 sentences max ) :</label>
+      <textarea name="book--description" id="book-description--input" rows="8"></textarea>
+      <button type="submit"  class="add-entry button-theme">Add Entry</button>
+    </form>
+  </dialog>
+
+  <dialog>
+    <form id="edit-book--form">
+      <label class="book-name--label" for="book-name--input">Enter a book's name :</label>
+      <input type="text" name="book-name" id="book-name--input">
+      <label class="book-author--label" for="book-author--input">Enter the author's name :</label>
+      <input type="text" name="book-author" id="book-author--input">
+      <label class="book-pages--label" for="book-pages--input">Enter the total number pages the book has :</label>
+      <input type="text" name="book-pages" id="book-pages--input">      
+      <label class="book-description--label" for="book-description--input">Write a description about the book ( 2 sentences max ) :</label>
+      <textarea name="book--description" id="book-description--input" rows="6"></textarea>
+      <button class="confirm-changes button-theme">Confirm Changes</button>
+  </dialog>
+  <script src="./scripts/script.js"></script>
+</body>
+</html>
