@@ -41,13 +41,6 @@ dialog
   margin-inline: auto;
 }
 
-#add-book--form > .close-dialog, #edit-book--form > .close-dialog{
-
-  position: relative;
-  left: 98%;
-  top: -0.5rem;
-}
-
 #add-book--form > input[type="text"], #add-book--form > textarea, #edit-book--form > input[type="text"], #edit-book--form > textarea{
   font-size: 1.2rem;
   padding: 0.5rem;
@@ -62,6 +55,15 @@ dialog
   outline: none;
 }
 
+.form-buttons{
+  display: flex;
+  gap: 1rem;
+}
+
+.form-buttons > *
+{
+  flex: 1;
+}
 
 .header > .header-content
 {
@@ -119,7 +121,7 @@ main
   border: 2px solid rgb(44, 44, 44);
 }
 
-button:hover
+button:active
 {
   background-color: white;
   color: rgb(44, 44, 44);

@@ -32,23 +32,79 @@ let myLibrary = [
     pagesRead: 0
   }
 ];
-
+let currentEditId = null;
 
 const books = document.querySelector(".content");
 const addBookButton = document.querySelector(".add-book");
 const addBookDialog = document.querySelector(".add-book--dialog");
+const editBookDialog = document.querySelector(".edit-book--dialog");
 const addEntryButton = document.querySelector(".add-entry");
+const confirmChanges = document.querySelector(".confirm-changes");
 const addBookForm = document.querySelector("#add-book--form");
+const editBookForm = document.querySelector("#edit-book--form");
+const closeDialogButton = document.querySelector(".close-dialog--button");
 const closeDialog = document.querySelector(".close-dialog");
+
+books.addEventListener("pointerdown",(e)=>{
+
+  const bookCard = e.target.closest(".book");
+  if (!bookCard) return;
+
+  const bookId = bookCard.dataset.id;
+
+  // ===== EDIT =====
+  if(e.target.classList.contains("book-edit")){
+
+    currentEditId = bookId;
+
+    const book = myLibrary.find(b => b.id === bookId);
+
+    editBookDialog.showModal();
+
+    editBookForm.elements["0"].value = book.bookTitle;
+    editBookForm.elements["1"].value = book.bookAuthor;
+    editBookForm.elements["2"].value = book.bookPages;
+    editBookForm.elements["3"].value = book.bookDesc;
+  }
+
+  // ===== DELETE =====
+  if(e.target.classList.contains("book-delete")){
+
+    // Remove from array
+    myLibrary = myLibrary.filter(book => book.id !== bookId);
+
+    // Remove from DOM (clean + efficient)
+    bookCard.remove();
+  }
+});
+
+editBookForm.addEventListener("submit",(event)=>{
+  event.preventDefault();
+
+  const book = myLibrary.find(b => b.id === currentEditId);
+
+  book.bookTitle = event.target["0"].value;
+  book.bookAuthor = event.target["1"].value;
+  book.bookPages = event.target["2"].value || "Unknown";
+  book.bookDesc = event.target["3"].value || "Unknown";
+
+  editBookDialog.close();
+
+  books.innerHTML = "";
+  addBooks(myLibrary);
+});
 
 myLibrary.forEach((book)=>{
     let bookCard = createBookElement(book);
     books.append(bookCard);
 });
 
-closeDialog.addEventListener("click",(e)=>{
+closeDialog.addEventListener("click",()=>{
+  editBookDialog.close();
+})
+closeDialogButton.addEventListener("click",(e)=>{
   const form = e.target.closest("form");
-  if(form.children["2"].value === "" && form.children["4"].value === "" && form.children["6"].value === "" && form.children["8"].value === ""){
+  if(form.children["1"].value === "" && form.children["3"].value === "" && form.children["5"].value === "" && form.children["7"].value === ""){
     addBookDialog.close();
   }
 })
@@ -56,8 +112,10 @@ closeDialog.addEventListener("click",(e)=>{
 addBookForm.addEventListener("submit",(submitEvent)=>{
   submitEvent.preventDefault();
   addBookDialog.close();
-  books.innerHTML=``;
   addBookToLibrary(submitEvent.target["0"].value,submitEvent.target["1"].value,submitEvent.target["2"].value,submitEvent.target["3"].value);
+  addBookForm.reset();
+  books.innerHTML=``;
+  addBooks(myLibrary);
 })
 addBookButton.addEventListener("click",()=>{
   addBookDialog.showModal();
@@ -84,7 +142,6 @@ function Book(bookTitle,bookAuthor,bookPages,bookDesc){
 function addBookToLibrary(bTitle,bAuthor,bPages,bDesc){
   const book = new Book(bTitle,bAuthor,bPages,bDesc);
   myLibrary.push(book);
-  addBooks(myLibrary);
 }
 
 function addBooks(library){
@@ -93,6 +150,8 @@ function addBooks(library){
     books.append(bookCard);
   });
 }
+
+
 
 function createBookElement(book) {
 
@@ -106,15 +165,20 @@ function createBookElement(book) {
 
   // Author
   const small = document.createElement("small");
-  small.innerHTML = `By <span class="author">${book.bookAuthor}</span>`;
+  small.textContent = `By `;
+  const author = document.createElement("span");
+  author.classList.add("author");
+  author.textContent = book.bookAuthor;
+  small.append(author);
 
   // Total Pages
   const totalPagesContainer = document.createElement("p");
   totalPagesContainer.classList.add("total-pages--container");
-  totalPagesContainer.innerHTML = `
-    Total Pages: <span class="total-pages">${book.bookPages}</span>
-  `;
-
+  totalPagesContainer.textContent = `Total Pages: `;
+  const totalPges = document.createElement("span");
+  totalPges.classList.add("total-pages");
+  totalPges.textContent = book.bookPages;
+  totalPagesContainer.append(totalPges);
   // Description
   const description = document.createElement("p");
   description.classList.add("book-description");
@@ -141,14 +205,14 @@ function createBookElement(book) {
   incrementBtn.innerHTML = `<i class="fa-solid fa-plus"></i>`;
 
   // ===== Increment / Decrement Logic =====
-  incrementBtn.addEventListener("click", () => {
+  incrementBtn.addEventListener("pointerdown", () => {
     if (book.pagesRead < book.bookPages) {
       book.pagesRead++;
       pagesRead.textContent = book.pagesRead;
     }
   });
 
-  decrementBtn.addEventListener("click", () => {
+  decrementBtn.addEventListener("pointerdown", () => {
     if (book.pagesRead > 0) {
       book.pagesRead--;
       pagesRead.textContent = book.pagesRead;

@@ -28,7 +28,6 @@
 
   <dialog class="add-book--dialog">
     <form id="add-book--form">
-      <i class="fa-solid fa-x close-dialog" style="color: rgb(0, 0, 0);"></i>
       <label class="book-name--label" for="book-name--input">Enter a book's name :</label>
       <input type="text" name="book-name" id="book-name--input" required>
       <label class="book-author--label" for="book-author--input">Enter the author's name :</label>
@@ -37,11 +36,14 @@
       <input type="text" name="book-pages" id="book-pages--input">      
       <label class="book-description--label" for="book-description--input">Write a description about the book ( 2 sentences max ) :</label>
       <textarea name="book--description" id="book-description--input" rows="8"></textarea>
-      <button type="submit"  class="add-entry button-theme">Add Entry</button>
+      <div class="form-buttons">
+        <button type="submit"  class="add-entry button-theme">Add Entry</button>
+        <button class="close-dialog--button button-theme">Cancel</button>
+      </div>
     </form>
   </dialog>
 
-  <dialog>
+  <dialog class="edit-book--dialog">
     <form id="edit-book--form">
       <label class="book-name--label" for="book-name--input">Enter a book's name :</label>
       <input type="text" name="book-name" id="book-name--input">
@@ -51,7 +53,10 @@
       <input type="text" name="book-pages" id="book-pages--input">      
       <label class="book-description--label" for="book-description--input">Write a description about the book ( 2 sentences max ) :</label>
       <textarea name="book--description" id="book-description--input" rows="6"></textarea>
-      <button class="confirm-changes button-theme">Confirm Changes</button>
+      <div class="form-buttons">
+        <button type="submit" class="confirm-changes button-theme">Confirm Changes</button>
+        <button class="close-dialog button-theme">Cancel</button>
+      </div>
   </dialog>
   <script src="./scripts/script.js"></script>
 </body>
